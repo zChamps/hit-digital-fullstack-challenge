@@ -1,0 +1,1 @@
+"""Hit Digital backend application."""
