@@ -49,9 +49,11 @@ export default function App() {
           {requestError && <FeedbackMessage message={requestError} />}
         </div>
 
-        {result && !requestError && (
-          <UserResults users={result.users} failedIds={result.failed} />
-        )}
+        <div className="results-region" aria-live="polite" aria-atomic="true">
+          {result && !requestError && (
+            <UserResults users={result.users} failedIds={result.failed} />
+          )}
+        </div>
       </div>
     </main>
   )

@@ -28,7 +28,12 @@ describe('App', () => {
     await user.click(screen.getByRole('button', { name: 'Consultar usuários' }))
 
     expect(mockedFetchUsers).toHaveBeenCalledWith([1, 3, 4])
-    expect(await screen.findByText('Leanne Graham')).toBeInTheDocument()
+    const returnedUser = await screen.findByText('Leanne Graham')
+    expect(returnedUser).toBeInTheDocument()
+    expect(returnedUser.closest('[aria-live="polite"]')).toHaveAttribute(
+      'aria-atomic',
+      'true',
+    )
     expect(screen.getByText(/Não foi possível consultar os IDs: 3, 4/)).toBeInTheDocument()
   })
 })
