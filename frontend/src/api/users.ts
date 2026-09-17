@@ -13,6 +13,10 @@ function getApiBaseUrl(): string {
   return (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/$/, '')
 }
 
+function isPositiveSafeInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value > 0
+}
+
 function isUserFetchResponse(body: unknown): body is UserFetchResponse {
   if (!body || typeof body !== 'object') {
     return false
@@ -26,11 +30,11 @@ function isUserFetchResponse(body: unknown): body is UserFetchResponse {
       (user) =>
         user !== null &&
         typeof user === 'object' &&
-        typeof (user as Record<string, unknown>).id === 'number' &&
+        isPositiveSafeInteger((user as Record<string, unknown>).id) &&
         typeof (user as Record<string, unknown>).name === 'string',
     ) &&
     Array.isArray(responseBody.failed) &&
-    responseBody.failed.every((failedId) => typeof failedId === 'number')
+    responseBody.failed.every(isPositiveSafeInteger)
   )
 }
 

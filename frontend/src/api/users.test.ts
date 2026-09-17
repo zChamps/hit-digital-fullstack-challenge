@@ -32,8 +32,12 @@ describe('fetchUsers', () => {
     { users: {}, failed: [] },
     { users: [], failed: {} },
     { users: [{ id: '1', name: 'Leanne Graham' }], failed: [] },
+    { users: [{ id: 0, name: 'Leanne Graham' }], failed: [] },
+    { users: [{ id: 1.5, name: 'Leanne Graham' }], failed: [] },
     { users: [{ id: 1, name: 42 }], failed: [] },
     { users: [], failed: ['2'] },
+    { users: [], failed: [-2] },
+    { users: [], failed: [2.5] },
   ])('rejects an invalid successful response: %j', async (body) => {
     mockSuccessfulResponse(body)
 
